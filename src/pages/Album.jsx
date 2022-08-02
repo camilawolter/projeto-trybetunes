@@ -39,21 +39,23 @@ class Album extends React.Component {
 
   render() {
     const { songs, nameAlbum, nameArtist, statusLoading } = this.state;
-    if (statusLoading) return <Loading />;
     return (
-      <div data-testid="page-album">
-        <Header />
-        <h2 data-testid="album-name">{nameAlbum}</h2>
-        <h2 data-testid="artist-name">{nameArtist}</h2>
-        {
-          songs.filter((_song, index) => index)
-            .map((song, index) => (<MusicCard
-              { ...song }
-              { ...this.state }
-              key={ index }
-            />))
-        }
-      </div>
+      !statusLoading ? (
+        <div data-testid="page-album">
+          <Header />
+          <h2 data-testid="album-name">{nameAlbum}</h2>
+          <h2 data-testid="artist-name">{nameArtist}</h2>
+          {
+            songs.filter((_song, index) => index)
+              .map((song, index) => (<MusicCard
+                { ...song }
+                { ...this.state }
+                key={ index }
+              />))
+          }
+        </div>
+      ) : <Loading />
+
     );
   }
 }

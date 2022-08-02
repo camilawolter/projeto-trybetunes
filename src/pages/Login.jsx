@@ -48,30 +48,33 @@ class Login extends React.Component {
     if (statusLoading) return <Loading />;
 
     return (
-      <div data-testid="page-login">
-        <form>
-          <div>
-            <input
-              type="text"
-              name="name"
-              value={ name }
-              data-testid="login-name-input"
-              placeholder="Nome"
-              onChange={ ({ target }) => this.handleChange(target) }
-            />
-            <button
-              type="button"
-              data-testid="login-submit-button"
-              disabled={ isDisabled }
-              onClick={ this.saveName }
-            >
-              Entrar
+      !statusLoading ? (
+        <div data-testid="page-login">
+          <form>
+            <div>
+              <input
+                type="text"
+                name="name"
+                value={ name }
+                data-testid="login-name-input"
+                placeholder="Nome"
+                onChange={ ({ target }) => this.handleChange(target) }
+              />
+              <button
+                type="button"
+                data-testid="login-submit-button"
+                disabled={ isDisabled }
+                onClick={ this.saveName }
+              >
+                Entrar
 
-            </button>
-          </div>
-        </form>
+              </button>
+            </div>
+          </form>
 
-      </div>
+        </div>
+      ) : <Loading />
+
     );
   }
 }
