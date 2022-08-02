@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 import Loading from './Loading';
 
 class MusicCard extends React.Component {
@@ -8,21 +8,28 @@ class MusicCard extends React.Component {
     super();
     this.state = {
       statusLoading: false,
-      inputCheck: false,
+      favSongs: [],
     };
+  }
+
+  async componentDidMount() {
+    this.setState({ favSongs: await getFavoriteSongs() });
   }
 
   checkFavoriteSong = () => {
     this.setState({ statusLoading: true }, async () => {
       const { music } = this.props;
       await addSong({ music });
-      this.setState({ statusLoading: false, inputCheck: true });
+      const { favSongs } = this.state;
+      this.setState({ statusLoading: false, favSongs: [...favSongs, music] });
     });
   }
 
   render() {
     const { trackName, previewUrl, trackId } = this.props;
-    const { statusLoading, inputCheck } = this.state;
+    const { statusLoading, favSongs } = this.state;
+
+    const isFavorite = favSongs.some((song) => song.trackId === trackId);
 
     return (
       !statusLoading ? (
@@ -43,7 +50,7 @@ class MusicCard extends React.Component {
               name="favorite"
               id="favorite"
               data-testid={ `checkbox-music-${trackId}` }
-              checked={ inputCheck }
+              checked={ isFavorite }
               onChange={ this.checkFavoriteSong }
             />
           </label>
