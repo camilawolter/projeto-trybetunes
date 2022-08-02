@@ -18,10 +18,9 @@ class MusicCard extends React.Component {
 
   checkFavoriteSong = () => {
     this.setState({ statusLoading: true }, async () => {
-      const { music } = this.props;
-      await addSong({ music });
+      await addSong({ ...this.props });
       const { favSongs } = this.state;
-      this.setState({ statusLoading: false, favSongs: [...favSongs, music] });
+      this.setState({ statusLoading: false, favSongs: [...favSongs, this.props] });
     });
   }
 

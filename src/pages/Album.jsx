@@ -47,7 +47,11 @@ class Album extends React.Component {
         <h2 data-testid="artist-name">{nameArtist}</h2>
         {
           songs.filter((_song, index) => index)
-            .map((song, index) => <MusicCard { ...song } key={ index } />)
+            .map((song, index) => (<MusicCard
+              { ...song }
+              { ...this.state }
+              key={ index }
+            />))
         }
       </div>
     );
