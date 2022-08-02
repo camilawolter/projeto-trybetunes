@@ -1,5 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
+import Loading from '../components/Loading';
+import searchAlbumsAPIs from '../services/searchAlbumsAPI';
 
 class Search extends React.Component {
   constructor() {
@@ -7,6 +10,9 @@ class Search extends React.Component {
     this.state = {
       nameArtist: '',
       isDisabled: true,
+      albuns: [],
+      statusLoading: false,
+      artistValue: '',
     };
   }
 
@@ -27,8 +33,23 @@ class Search extends React.Component {
     });
   }
 
+  searchArtists = () => {
+    const { nameArtist } = this.state;
+    this.setState({ statusLoading: true, artistValue: nameArtist }, async () => {
+      const foundAlbuns = await searchAlbumsAPIs(nameArtist);
+      this.setState({
+        albuns: foundAlbuns,
+        statusLoading: false,
+        nameArtist: '',
+      });
+    });
+  }
+
   render() {
-    const { nameArtist, isDisabled } = this.state;
+    const { nameArtist, isDisabled, albuns, artistValue, statusLoading } = this.state;
+
+    if (statusLoading) return <Loading />;
+
     return (
       <div data-testid="page-search">
         <h2>Search</h2>
@@ -46,11 +67,49 @@ class Search extends React.Component {
             type="button"
             data-testid="search-artist-button"
             disabled={ isDisabled }
+            onClick={ this.searchArtists }
           >
             Pesquisar
 
           </button>
         </form>
+        <div>
+          {
+            (albuns.length) ? (
+              <div>
+                <h2>
+                  {
+                    `Resultado de álbuns de: ${artistValue}`
+                  }
+                </h2>
+
+                {albuns.map(({
+                  artistName,
+                  collectionId,
+                  collectionName,
+                  artworkUrl100,
+                }) => (
+                  <div key={ collectionId }>
+
+                    <Link
+                      to={ `/album/${collectionId}` }
+                      data-testid={ `link-to-album-${collectionId}` }
+                    >
+                      <img src={ artworkUrl100 } alt={ artistName } />
+                    </Link>
+
+                    <p>{collectionName}</p>
+
+                    <h3>{artistName}</h3>
+
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <h3>Nenhum álbum foi encontrado</h3>
+            )
+          }
+        </div>
       </div>
     );
   }
