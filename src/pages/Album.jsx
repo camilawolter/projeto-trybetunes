@@ -43,8 +43,8 @@ class Album extends React.Component {
       !statusLoading ? (
         <div data-testid="page-album">
           <Header />
-          <h2 data-testid="album-name">{nameAlbum}</h2>
-          <h2 data-testid="artist-name">{nameArtist}</h2>
+          <h4 data-testid="album-name">{nameAlbum}</h4>
+          <h3 data-testid="artist-name">{nameArtist}</h3>
           {
             songs.filter((_song, index) => index)
               .map((song, index) => (<MusicCard

@@ -40,7 +40,6 @@ class Favorites extends React.Component {
               {
                 favSongs.map((song) => (<MusicCard
                   { ...song }
-                  { ...this.state }
                   key={ song.trackId }
                   onChange={ () => this.checkFavoriteSong(song) }
                 />
