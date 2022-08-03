@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 import Loading from './Loading';
 
 class MusicCard extends React.Component {
@@ -18,9 +18,19 @@ class MusicCard extends React.Component {
 
   checkFavoriteSong = () => {
     this.setState({ statusLoading: true }, async () => {
-      await addSong({ ...this.props });
+      const { trackId: track } = this.props;
       const { favSongs } = this.state;
-      this.setState({ statusLoading: false, favSongs: [...favSongs, this.props] });
+
+      const isFavorite = favSongs.some((song) => song.trackId === track);
+      const filterTrack = favSongs.filter(({ trackId }) => trackId !== track);
+
+      if (isFavorite) {
+        await removeSong({ ...this.props });
+        this.setState({ statusLoading: false, favSongs: filterTrack });
+      } else {
+        await addSong({ ...this.props });
+        this.setState({ statusLoading: false, favSongs: [...favSongs, this.props] });
+      }
     });
   }
 
@@ -34,7 +44,7 @@ class MusicCard extends React.Component {
       !statusLoading ? (
         <div>
           <p>{trackName}</p>
-          <audio data-testid="audio-component" src={ `${previewUrl} controls` }>
+          <audio data-testid="audio-component" src={ previewUrl } controls>
             <track kind="captions" />
             O seu navegador não suporta o elemento
             {' '}
@@ -42,12 +52,11 @@ class MusicCard extends React.Component {
             <code>audio</code>
             .
           </audio>
-          <label htmlFor="favorite">
+          <label htmlFor={ `checkbox-music-${trackId}` }>
             Favorita
             <input
               type="checkbox"
-              name="favorite"
-              id="favorite"
+              id={ `checkbox-music-${trackId}` }
               data-testid={ `checkbox-music-${trackId}` }
               checked={ isFavorite }
               onChange={ this.checkFavoriteSong }
