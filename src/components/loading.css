@@ -1,0 +1,20 @@
+@import url( 'https://fonts.googleapis.com/css?family=Montserrat&display=swap' );
+
+.loadingText {
+  position: absolute;
+  width: 289px;
+  height: 55px;
+  left: 576px;
+  top: 153px;
+  
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 20px;
+  line-height: 65px;
+  
+  letter-spacing: 0.02em;
+  
+  color: #023031;
+}
+

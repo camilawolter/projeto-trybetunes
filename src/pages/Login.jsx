@@ -1,6 +1,7 @@
 import React from 'react';
-// import { Redirect } from 'react-router-dom';
+import './login.css';
 import PropTypes from 'prop-types';
+import logo from '../img/logo.png';
 import { createUser } from '../services/userAPI';
 import Loading from '../components/Loading';
 
@@ -50,6 +51,7 @@ class Login extends React.Component {
     return (
       !statusLoading ? (
         <div data-testid="page-login">
+          <img src={ logo } alt="logo" className="imgLogin" />
           <form>
             <div>
               <input
@@ -59,12 +61,14 @@ class Login extends React.Component {
                 data-testid="login-name-input"
                 placeholder="Nome"
                 onChange={ ({ target }) => this.handleChange(target) }
+                className="inputTextLogin"
               />
               <button
                 type="button"
                 data-testid="login-submit-button"
                 disabled={ isDisabled }
                 onClick={ this.saveName }
+                className="buttonLogin"
               >
                 Entrar
 

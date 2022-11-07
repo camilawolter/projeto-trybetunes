@@ -1,0 +1,41 @@
+h1 {
+  color: #ffff;
+}
+.headerOne h1  {
+background-color: #023031;
+width: 1440px;
+height: 96px;
+top: 5px;
+}
+
+.headerOne p {
+box-sizing: border-box;
+
+position: absolute;
+width: 198.7px;
+height: 41.65px;
+left: 1100px;
+top: 32px;
+
+background: #FFFFFF;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 50px;
+}
+
+nav {
+  background-color: #68696b;
+  width: 1440px;
+  height: 78px;
+}
+
+nav span {
+  font-family: 'Epilogue';
+font-style: normal;
+font-weight: 700;
+font-size: 28px;
+line-height: 29px;
+text-decoration: none;
+list-style: none;
+
+color: #2FC18C;
+}

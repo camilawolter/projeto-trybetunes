@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { getUser } from '../services/userAPI';
 import Loading from './Loading';
+import './header.css';
 
 class Header extends React.Component {
   constructor() {
@@ -29,12 +30,18 @@ class Header extends React.Component {
 
     return (
       <header data-testid="header-component">
+        <div className="headerOne">
+          <h1>TrybeTunes</h1>
+          <p data-testid="header-user-name">{userInput}</p>
+        </div>
+
         <nav>
-          <Link to="/search" data-testid="link-to-search">Pesquisar</Link>
-          <Link to="/favorites" data-testid="link-to-favorites">Favoritos</Link>
-          <Link to="/profile" data-testid="link-to-profile">Perfil</Link>
+          <Link to="/search" data-testid="link-to-search"><span>Pesquisar</span></Link>
+          <Link to="/favorites" data-testid="link-to-favorites">
+            <span>Favoritos</span>
+          </Link>
+          <Link to="/profile" data-testid="link-to-profile"><span>Perfil</span></Link>
         </nav>
-        <p data-testid="header-user-name">{userInput}</p>
       </header>
     );
   }
